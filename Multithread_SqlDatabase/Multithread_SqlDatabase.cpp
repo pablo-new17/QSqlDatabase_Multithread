@@ -92,8 +92,7 @@ ConnectNode::ConnectNode(const DatabaseSettings &dataBaseSettings, const Connect
         m_autoClose = new QTimer;
         m_autoClose->setSingleShot(true);
         m_autoClose->setInterval(m_connectSettings.maxOpenTime());
-        m_autoClose->moveToThread(qApp->thread());
-        m_autoClose->setParent(qApp);
+        m_autoClose->moveToThread(QCoreApplication::instance()->thread());
 
         connect(m_autoClose, SIGNAL(timeout()), this, SLOT(close()), Qt::DirectConnection);
         connect(this, SIGNAL(controlStartAutoClose()), m_autoClose, SLOT(start()));
